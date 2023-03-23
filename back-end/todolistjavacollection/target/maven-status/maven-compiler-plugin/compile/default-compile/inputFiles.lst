@@ -1,0 +1,12 @@
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/TodolistjavacollectionApplication.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/web/ToDoModelAssembler.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/web/ToDoController.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/exceptions/ToDoNotFoundAdvice.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/domain/ToDoRepositoryImp.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/domain/Metrics.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/repository/CrudRepositoryImp.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/repository/Specification.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/exceptions/ToDoNotFoundException.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/repository/CrudRepository.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/domain/ToDoRepository.java
+/Users/oscar.garzon/Documents/breakable_toy 2/back-end/todolistjavacollection/src/main/java/com/packt/todolistjavacollection/domain/ToDo.java
