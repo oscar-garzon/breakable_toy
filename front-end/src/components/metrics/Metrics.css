@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    border: 2px solid black;
+    border-radius: 30px;
+    justify-content: flex-start;
+    margin: 1% 2% 2% 2%;
+}
+
+.item {
+    flex: 1 1 auto;
+    width: 90%;
+    text-align: center;
+}
+
+li {
+    list-style-type: none;
+}
