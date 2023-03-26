@@ -13,8 +13,10 @@ public class ToDoModelAssembler implements RepresentationModelAssembler<ToDo, En
     
     @Override
      public EntityModel<ToDo> toModel(ToDo todo) {
+        System.out.println("CARNAL ENTRAMOS AL ASSEMBLER");
         return EntityModel.of(todo, //
             linkTo(methodOn(ToDoController.class).one(todo.getId())).withSelfRel(),
-            linkTo(methodOn(ToDoController.class).all()).withRel("todos"));
+            linkTo(methodOn(ToDoController.class).all("", "", "", ""))
+                                                            .withRel("todos"));
   }
 }

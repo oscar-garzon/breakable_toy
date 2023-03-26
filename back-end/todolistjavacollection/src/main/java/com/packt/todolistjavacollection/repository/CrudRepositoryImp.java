@@ -46,7 +46,7 @@ public class CrudRepositoryImp implements CrudRepository<ToDo, Long> {
             return false;
         }
 
-        // Returns all items of a given type
+        // Returns a copy of all items 
         public List<ToDo> findAll(){
             return new ArrayList<>(repository);
         }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.CollectionModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -16,13 +17,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.packt.todolistjavacollection.domain.ToDo;
+import com.packt.todolistjavacollection.domain.Sort;
 import com.packt.todolistjavacollection.exceptions.ToDoNotFoundException;
 import com.packt.todolistjavacollection.domain.ToDoRepositoryImp;
 
-@CrossOrigin()
+@CrossOrigin()  
 @RestController
 public class ToDoController {
 
@@ -37,11 +40,23 @@ public class ToDoController {
     }
 
     @GetMapping("/todos")
-    public CollectionModel<EntityModel<ToDo>> all(){
-        List<EntityModel<ToDo>> todos = repository.findAll().stream()
+    public CollectionModel<EntityModel<ToDo>> all(@RequestParam(defaultValue = "") String principalSortBy,
+                                                   @RequestParam(defaultValue = "" ) String principalSortOrder,
+                                                   @RequestParam(defaultValue = "" ) String secondarySortBy,
+                                                   @RequestParam(defaultValue = "" ) String secondarySortOrder){
+            
+        List<EntityModel<ToDo>> todos = repository.findAll(new Sort(principalSortBy,
+                                                                    principalSortOrder,
+                                                                    secondarySortBy,
+                                                                    secondarySortOrder))
+            .stream()
             .map(assembler::toModel)
             .collect(Collectors.toList());
-        return CollectionModel.of(todos, linkTo(methodOn(ToDoController.class).all()).withSelfRel());
+        return CollectionModel.of(todos, linkTo(methodOn(ToDoController.class).all(principalSortBy,
+                                                                                              principalSortOrder,
+                                                                                              secondarySortBy,
+                                                                                              secondarySortOrder))
+                                                                                          .withSelfRel());
     }   
 
     @GetMapping("/todos/{id}")

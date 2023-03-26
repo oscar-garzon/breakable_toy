@@ -1,5 +1,7 @@
 package com.packt.todolistjavacollection;
 
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -23,17 +25,22 @@ public class TodolistjavacollectionApplication implements CommandLineRunner {
 		logger.info("Application started");
 	}
 
-	String high = "high";
-	String medium = "medium";
-	String low = "low";
 	
 	@Override
     public void run(String... args) throws Exception {
-		repository.save(new ToDo("Implementa componente 1",high, "hoy"));	
-		repository.save(new ToDo("Implementa componente 2", high, "manana"));	
-		repository.save(new ToDo("Implementa componente 3", medium , "pasado manana"));	
-		repository.save(new ToDo("Implementa componente 4", medium, "hoy"));	
-		repository.save(new ToDo("Implementa componente 5", medium, "manana"));	
+		String high = "high";
+		String medium = "medium";
+		String low = "low";
+		LocalDateTime date1 = LocalDateTime.of(2023, 03, 24, 18, 23);
+		LocalDateTime date2 = LocalDateTime.of(2023, 03, 25, 10, 23);
+		LocalDateTime date3 = LocalDateTime.of(2023, 03, 24, 19, 23);
+
+
+		repository.save(new ToDo("Implementa componente 1",high, date1));	
+		repository.save(new ToDo("Implementa componente 2", high, date2));	
+		repository.save(new ToDo("Implementa componente 3", medium , date2));	
+		repository.save(new ToDo("Implementa componente 4", medium, date3));	
+		repository.save(new ToDo("Implementa componente 5", low, date1));	
 		for (ToDo todo : repository.findAll()) {
             logger.info(todo.getText() + " " + todo.getPriority());
         }

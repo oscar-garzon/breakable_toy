@@ -1,12 +1,14 @@
 package com.packt.todolistjavacollection.domain;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.lang.ClassCastException;
 
 import jakarta.validation.constraints.NotBlank;
 
 //import jakarta.validation.constraints.FutureOrPresent;
 
-public class ToDo {
+public class ToDo{
 
     private Long id;
 
@@ -14,13 +16,11 @@ public class ToDo {
     private String text, priority;
     
     // @DateTimeFormat(pattern="MM/dd/yyyy")
-    //@FutureOrPresent
-    private String due_date;
-   
-    private LocalDateTime creation_date, done_date;
+    // @FutureOrPresent
+    private LocalDateTime creation_date, done_date, due_date;
     private boolean done;
 
-    public ToDo(String text, String priority, String due_date) {
+    public ToDo(String text, String priority, LocalDateTime due_date) {
         this.text = text;
         this.id = null;
         this.due_date = due_date;
@@ -52,10 +52,10 @@ public class ToDo {
     public void setText(String text) {
         this.text = text;
     }
-    public String getDue_date() {
+    public LocalDateTime getDue_date() {
         return due_date;
     }
-    public void setDue_date(String due_date) {
+    public void setDue_date(LocalDateTime due_date) {
         this.due_date = due_date;
     }
     public LocalDateTime getDone_date() {
@@ -83,6 +83,16 @@ public class ToDo {
         this.done = done;
     }
 
+    public void setDoneAndDoneDate() {
+        done = true;
+        done_date = LocalDateTime.now();
+    }
+
+    @Override
+    public String toString() {
+        return "[text=" + text + ", priority: " + priority + ", due date: " + due_date + "]";
+    }
+
     // Function that updates text, due_date and priority
     public void update(ToDo todo){
         this.text = todo.getText();
@@ -91,9 +101,84 @@ public class ToDo {
         return;
     }
 
-    public void setDoneAndDoneDate() {
-        done = true;
-        done_date = LocalDateTime.now();
-    }
+    // Comparator to sort todos by priority
+    public static Comparator<ToDo> PriorityComparatorASC = new Comparator<ToDo>() {
+        
+        @Override
+        public int compare(ToDo td1, ToDo td2) {
+            // if(!(td1.getClass().equals(td2.getClass()))){
+            //     throw ClassCastException;
+            // }
+
+            if (td1.getPriority().equals("low")){
+                if (td2.getPriority().equals("low")){
+                    return 0;
+                }
+                else{
+                    return -1;
+                }
+            }
+            else if(td1.getPriority().equals("medium")){
+                if(td2.getPriority().equals("low")) {
+                    return 1;
+                }
+                else if(td2.getPriority().equals("medium")){
+                    return 0;
+                }
+                else{
+                    return -1;
+                }
+            }
+            else {
+                if(td2.getPriority().equals("high")) {
+                    return 0;
+                }
+                else {
+                    return -1;
+                }
+            }
+            
+        }
+    };
+
+    public static Comparator<ToDo> PriorityComparatorDESC = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2){
+            if (td1.getPriority().equals("high")){
+                if (td2.getPriority().equals("high")){
+                    return 0;
+                }
+                else{
+                    return -1;
+                }
+            }
+            else if(td1.getPriority().equals("medium")){
+                if(td2.getPriority().equals("low")) {
+                    return -1;
+                }
+                else if(td2.getPriority().equals("medium")){
+                    return 0;
+                }
+                else{
+                    return 1;
+                }
+            }
+            else {
+                if(td2.getPriority().equals("low")) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<ToDo> DueDateComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2){
+            return td1.getDue_date().compareTo(td2.getDue_date());
+        }
+    };
 
 }
