@@ -17,7 +17,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import java.util.stream.Collectors;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.packt.todolistjavacollection.domain.ToDo;
@@ -43,19 +42,24 @@ public class ToDoController {
     public CollectionModel<EntityModel<ToDo>> all(@RequestParam(defaultValue = "") String principalSortBy,
                                                    @RequestParam(defaultValue = "" ) String principalSortOrder,
                                                    @RequestParam(defaultValue = "" ) String secondarySortBy,
-                                                   @RequestParam(defaultValue = "" ) String secondarySortOrder){
+                                                   @RequestParam(defaultValue = "" ) String secondarySortOrder,
+                                                   @RequestParam(defaultValue = "" ) String filterByText,
+                                                   @RequestParam(defaultValue = "" ) String filterByPriority,
+                                                   @RequestParam(defaultValue = "" ) String filterByDone){
+
+        Sort sort = new Sort(principalSortBy, principalSortOrder, secondarySortBy, secondarySortOrder);                                                    
             
-        List<EntityModel<ToDo>> todos = repository.findAll(new Sort(principalSortBy,
-                                                                    principalSortOrder,
-                                                                    secondarySortBy,
-                                                                    secondarySortOrder))
+        List<EntityModel<ToDo>> todos = repository.findAll(sort)
             .stream()
             .map(assembler::toModel)
             .collect(Collectors.toList());
         return CollectionModel.of(todos, linkTo(methodOn(ToDoController.class).all(principalSortBy,
                                                                                               principalSortOrder,
                                                                                               secondarySortBy,
-                                                                                              secondarySortOrder))
+                                                                                              secondarySortOrder,
+                                                                                              filterByText,
+                                                                                              filterByPriority,
+                                                                                              filterByDone))
                                                                                           .withSelfRel());
     }   
 

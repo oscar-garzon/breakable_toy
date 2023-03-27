@@ -2,7 +2,6 @@ package com.packt.todolistjavacollection.domain;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.lang.ClassCastException;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -180,5 +179,199 @@ public class ToDo{
             return td1.getDue_date().compareTo(td2.getDue_date());
         }
     };
+
+    public static Comparator<ToDo> PriorityAscAndDueDateAscComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2) {
+            if (td1.getPriority().equals("low")){
+                if (td2.getPriority().equals("low")){ // Both todos has a low priority
+                    return td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return -1;
+                }
+            }
+            else if(td1.getPriority().equals("medium")){
+                if(td2.getPriority().equals("low")) {
+                    return 1;
+                }
+                else if(td2.getPriority().equals("medium")){
+                    return td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else{
+                    return -1;
+                }
+            }
+            else {
+                if(td2.getPriority().equals("high")) {
+                    return td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return -1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<ToDo> PriorityAscAndDueDateDescComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2) {
+            if (td1.getPriority().equals("low")){
+                if (td2.getPriority().equals("low")){ // Both todos has a low priority
+                    return -1 * td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return -1;
+                }
+            }
+            else if(td1.getPriority().equals("medium")){
+                if(td2.getPriority().equals("low")) {
+                    return 1;
+                }
+                else if(td2.getPriority().equals("medium")){
+                    return -1 * td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else{
+                    return -1;
+                }
+            }
+            else {
+                if(td2.getPriority().equals("high")) {
+                    return -1 * td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return -1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<ToDo> PriorityDescAndDueDateAscComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2) {
+            if (td1.getPriority().equals("low")){
+                if (td2.getPriority().equals("low")){ // Both todos has a low priority
+                    return td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return 1;
+                }
+            }
+            else if(td1.getPriority().equals("medium")){
+                if(td2.getPriority().equals("low")) {
+                    return -1;
+                }
+                else if(td2.getPriority().equals("medium")){
+                    return td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else{
+                    return 1;
+                }
+            }
+            else {
+                if(td2.getPriority().equals("high")) {
+                    return td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return -1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<ToDo> PriorityDescAndDueDateDescComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2) {
+            if (td1.getPriority().equals("low")){
+                if (td2.getPriority().equals("low")){ // Both todos has a low priority
+                    return -1 * td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return 1;
+                }
+            }
+            else if(td1.getPriority().equals("medium")){
+                if(td2.getPriority().equals("low")) {
+                    return -1;
+                }
+                else if(td2.getPriority().equals("medium")){
+                    return -1 * td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else{
+                    return 1;
+                }
+            }
+            else {
+                if(td2.getPriority().equals("high")) {
+                    return -1 * td1.getDue_date().compareTo(td2.getDue_date());
+                }
+                else {
+                    return -1;
+                }
+            }
+        }
+    };
+
+    public static Comparator<ToDo> DueDateAscAndPriorityAscComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2){
+            int due_date_comparation = td1.getDue_date().compareTo(td2.getDue_date());
+            
+            if(due_date_comparation == 0){
+                return PriorityComparatorASC.compare(td1, td2);
+            }
+            else {
+                return due_date_comparation;
+            }
+        }
+    };
+
+    public static Comparator<ToDo> DueDateAscAndPriorityDescComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2){
+            int due_date_comparation = td1.getDue_date().compareTo(td2.getDue_date());
+            
+            if(due_date_comparation == 0){
+                return PriorityComparatorDESC.compare(td1, td2);
+            }
+            else {
+                return due_date_comparation;
+            }
+        }
+    };
+
+    public static Comparator<ToDo> DueDateDescAndPriorityAscComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2){
+            int due_date_comparation = -1 * td1.getDue_date().compareTo(td2.getDue_date());
+            
+            if(due_date_comparation == 0){
+                return PriorityComparatorASC.compare(td1, td2);
+            }
+            else {
+                return due_date_comparation;
+            }
+        }
+    };
+
+    public static Comparator<ToDo> DueDateDescAndPriorityDescComparator = new Comparator<ToDo>() {
+        @Override
+        public int compare(ToDo td1, ToDo td2){
+            int due_date_comparation = -1 * td1.getDue_date().compareTo(td2.getDue_date());
+            
+            if(due_date_comparation == 0){
+                return PriorityComparatorDESC.compare(td1, td2);
+            }
+            else {
+                return due_date_comparation;
+            }
+        }
+    };
+
+
+
+    
+
+
 
 }
