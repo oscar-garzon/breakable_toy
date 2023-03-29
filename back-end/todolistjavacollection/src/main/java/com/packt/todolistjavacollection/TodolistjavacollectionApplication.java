@@ -35,11 +35,11 @@ public class TodolistjavacollectionApplication implements CommandLineRunner {
 		String date3 = "29/03/2023";
 
 
-		repository.save(new ToDo("Implementa componente 1",high, date1));	
 		repository.save(new ToDo("Implementa componente 2", high, date2));	
 		repository.save(new ToDo("Implementa componente 3", medium , date2));	
-		repository.save(new ToDo("Implementa componente 4", medium, date3));	
 		repository.save(new ToDo("Implementa componente 5", low, date1));	
+		repository.save(new ToDo("Implementa componente 4", medium, date3));	
+		repository.save(new ToDo("Implementa componente 1",high, date1));	
 		for (ToDo todo : repository.findAll()) {
             logger.info(todo.getText() + " " + todo.getPriority());
         }

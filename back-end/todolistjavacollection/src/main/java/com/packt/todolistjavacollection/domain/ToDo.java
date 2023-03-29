@@ -118,6 +118,7 @@ public class ToDo{
             // if(!(td1.getClass().equals(td2.getClass()))){
             //     throw ClassCastException;
             // }
+            System.out.println("ENTRE PRIORITYCOMPARATORASC");
 
             if (td1.getPriority().equals("low")){
                 if (td2.getPriority().equals("low")){
@@ -143,7 +144,7 @@ public class ToDo{
                     return 0;
                 }
                 else {
-                    return -1;
+                    return 1;
                 }
             }
             
@@ -217,7 +218,7 @@ public class ToDo{
                     return td1.getDue_date().compareTo(td2.getDue_date());
                 }
                 else {
-                    return -1;
+                    return 1;
                 }
             }
         }
@@ -250,7 +251,7 @@ public class ToDo{
                     return -1 * td1.getDue_date().compareTo(td2.getDue_date());
                 }
                 else {
-                    return -1;
+                    return 1;
                 }
             }
         }

@@ -40,6 +40,7 @@ public class ToDoRepositoryImp extends CrudRepositoryImp implements ToDoReposito
 
         ArrayList<ToDo> elements = (ArrayList<ToDo>) findAll();
         if(!sort.hasPrincipalSort()){
+            System.out.println("THERE'S NO PRINCIPAL SORT");
             return elements;
         }
 
@@ -59,6 +60,7 @@ public class ToDoRepositoryImp extends CrudRepositoryImp implements ToDoReposito
         else {
             // Only has principal sort
             if(principalSortBy.equals("priority")){
+                System.out.println("ENTER ONLY PRINCIPAL SORT");
                 sortByPriority(elements, principalSortOrder);
             }
             else {
@@ -79,6 +81,7 @@ public class ToDoRepositoryImp extends CrudRepositoryImp implements ToDoReposito
 
     private void sortByPriority(ArrayList<ToDo> elements, String prioritySortOrder){
         if(prioritySortOrder.equals("ASC")){
+            System.out.println("ENTER PRIORITY ASC");
             Collections.sort(elements, ToDo.PriorityComparatorASC);
         }
         else{

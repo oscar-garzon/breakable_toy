@@ -50,15 +50,18 @@ public class ToDoController {
                                                    @RequestParam(defaultValue = "" ) String filterByDone){
 
         Sort sort = new Sort(principalSortBy, principalSortOrder, secondarySortBy, secondarySortOrder); 
-        SpecificationImp spec = new SpecificationImp(filterByText, filterByPriority, filterByDone); 
+        SpecificationImp filters = new SpecificationImp(filterByText, filterByPriority, filterByDone); 
         
         ArrayList<ToDo> elements;
 
-        if(!spec.isEmpty()){
-            elements = repository.filterBy(spec);
+        if(!filters.isEmpty()){
+            System.out.println("ENTRE A FILTER");
+            elements = repository.filterBy(filters);
         }
         else{
+            System.out.println("ENTRE A SORT");
             elements = repository.findAll(sort);
+            System.out.println(elements.toString()) ;
         }
 
             

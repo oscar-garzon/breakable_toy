@@ -80,6 +80,7 @@ public class ToDoRepositoryTest {
         repository.save(new ToDo("hola", medium, date1));
         repository.save(new ToDo("hola", low, date1));
 
+        // Not ordered. Tasks are shown as they were added.
         Sort sort = new Sort("", "", "", "");
         ArrayList<ToDo> sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -88,6 +89,17 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getText()).isEqualTo("hola");
         assertThat(sorted_elements.get(3).getText()).isEqualTo("hola");
 
+       //Sort: Priority Asc 
+       sort = new Sort(priority, asc, "", "");
+       sorted_elements = repository.findAll(sort);
+       assertThat(sorted_elements).isNotEqualTo(null);
+       assertThat(sorted_elements.get(0).getPriority()).isEqualTo(low);
+       assertThat(sorted_elements.get(1).getPriority()).isEqualTo(low);
+       assertThat(sorted_elements.get(2).getPriority()).isEqualTo(medium);
+       assertThat(sorted_elements.get(3).getPriority()).isEqualTo(high);
+
+        
+        //Sort: Priority Asc + Due date Asc
         sort = new Sort(priority, asc, due_date, asc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -96,6 +108,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getPriority()).isEqualTo(medium);
         assertThat(sorted_elements.get(3).getPriority()).isEqualTo(high);
 
+        // Sort: Priority desc + Due date asc
         sort = new Sort(priority, desc, due_date, asc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -104,6 +117,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getDue_date()).isEqualTo(date1);
         assertThat(sorted_elements.get(3).getDue_date()).isEqualTo(date2);
 
+        // Sort: Priority Asc + Due date desc
         sort = new Sort(priority, asc, due_date, desc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -112,6 +126,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getPriority()).isEqualTo(medium);
         assertThat(sorted_elements.get(3).getPriority()).isEqualTo(high);
 
+        // Sort: Priority desc + Due date desc
         sort = new Sort(priority, desc, due_date, desc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -120,6 +135,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getDue_date()).isEqualTo(date2);
         assertThat(sorted_elements.get(3).getDue_date()).isEqualTo(date1);
 
+        // Sort: Due date asc + Priority asc
         sort = new Sort(due_date, asc, priority, asc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -128,6 +144,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getDue_date()).isEqualTo(date2);
         assertThat(sorted_elements.get(3).getDue_date()).isEqualTo(date3);
 
+        // Sort; Due date desc + Priority asc
         sort = new Sort(due_date, desc, priority, asc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -136,6 +153,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getPriority()).isEqualTo(low);
         assertThat(sorted_elements.get(3).getPriority()).isEqualTo(medium);
 
+        // Sort: Due date asc + Priority desc
         sort = new Sort(due_date, asc, priority, desc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -144,6 +162,7 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(2).getDue_date()).isEqualTo(date2);
         assertThat(sorted_elements.get(3).getDue_date()).isEqualTo(date3);
 
+        // Sort: Due date desc + Priority desc
         sort = new Sort(due_date, desc, priority, desc);
         sorted_elements = repository.findAll(sort);
         assertThat(sorted_elements).isNotEqualTo(null);
@@ -151,6 +170,28 @@ public class ToDoRepositoryTest {
         assertThat(sorted_elements.get(1).getDue_date()).isEqualTo(date2);
         assertThat(sorted_elements.get(2).getPriority()).isEqualTo(medium);
         assertThat(sorted_elements.get(3).getPriority()).isEqualTo(low);
+    
+        repository.deleteAll();
+
+        // String priority = "priority";
+        // String due_date = "due_date";
+        // String asc = "ASC";
+        // String desc = "DESC";
+
+        repository.save(new ToDo("Implementa componente 2", high, date2));	
+		repository.save(new ToDo("Implementa componente 3", medium , date2));	
+		repository.save(new ToDo("Implementa componente 5", low, date1));	
+		repository.save(new ToDo("Implementa componente 4", medium, date3));	
+		repository.save(new ToDo("Implementa componente 1",high, date1));
+
+        sort = new Sort(priority, asc, "", "");
+        sorted_elements = repository.findAll(sort);
+        assertThat(sorted_elements.get(0).getPriority()).isEqualTo(low);
+        assertThat(sorted_elements.get(1).getPriority()).isEqualTo(medium);
+        assertThat(sorted_elements.get(2).getPriority()).isEqualTo(medium);
+        assertThat(sorted_elements.get(3).getPriority()).isEqualTo(high);
+        assertThat(sorted_elements.get(4).getPriority()).isEqualTo(high);
+    
     }
 
     @Test

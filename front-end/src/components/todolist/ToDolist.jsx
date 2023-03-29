@@ -13,18 +13,31 @@ function ToDolist() {
     const [openEdit, setOpenEdit] = useState(false);
     const [selectedRow, setSelectedRow] = useState({});
     const [openAdd, setOpenAdd] = useState(false);
-    const [done, setDone] = useState(true);
-    const [orderByPriorityASC, setOrderByPriorityASC] = useState(true);
+    const [sorting, setSorting] = useState({
+        principalSortBy: '',
+        principalSortOrder: '',
+        secondarySortBy: '',
+        secondarySortOrder: '',
+        });
     
     // Fetch todoos front api the first the app is rendered
     useEffect(() => {
         fetchToDos();
     }, []);       
       
-    // Makes a GET request to the API
-    const fetchToDos = () => {
-    
-    fetch(SERVER_URL + 'todos')
+    // Makes a GET request to the API. If params it's not included in the function
+    // call then the function will call "SERVER_URL + 'todo'"
+    // If params it's included in the function call
+    // the api call will be "SERVER_URL + 'todo?'+ params"
+    const fetchToDos = (params="none") => {
+        if(params == "none"){
+            var api_response = fetch(SERVER_URL + 'todos');
+        }
+        else{
+            api_response = fetch(SERVER_URL + 'todos?' + params);
+        }
+
+    api_response
     .then(response => response.json())
     .then(data => setTodos(data._embedded.toDoList))
     .catch(err => console.error(err));    
@@ -120,11 +133,23 @@ function ToDolist() {
     }
 
     const sortTodos = (sortBy, sortOrder) => {
-        console.log(sortBy + ' ' + sortOrder);
-        //setOrderByPriorityASC(!orderByPriorityASC);
-        // if(orderByPriorityASC){
-        //     fetch(SERVER_URL + 'todos?')
-        // }
+        if(sorting.principalSortBy == sortBy && sorting.principalSortOrder == sortOrder){
+            setSorting({
+                ...sorting,
+                principalSortBy: '',
+                principalSortOrder: ''
+            })
+            fetchToDos();
+        }
+        else{
+            setSorting({
+                ...sorting,
+                principalSortBy: sortBy,
+                principalSortOrder: sortOrder
+                });
+            fetchToDos(`principalSortBy=${sortBy}&principalSortOrder=${sortOrder}&secondarySortBy=&secondarySortOrder=`);
+        }
+
     }
 
     const filterTodos = (params) => { 
@@ -145,9 +170,14 @@ function ToDolist() {
                     <tr>
                         <th>    </th>
                         <th>Task</th>
-                        <th>Priority <button onClick={() => sortTodos('Priority', 'ASC')}>&uarr;</button>
+                        <th>Priority 
+                            <button onClick={() => sortTodos('priority', 'ASC')}>&uarr;</button>
+                            <button onClick={() => sortTodos('priority', 'DESC')}>&darr;</button>
                         </th>
-                        <th>Due Date</th>
+                        <th>Due Date
+                            <button onClick={() => sortTodos('due_date', 'ASC')}>&uarr;</button>    
+                            <button onClick={() => sortTodos('due_date', 'DESC')}>&darr;</button>
+                        </th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
