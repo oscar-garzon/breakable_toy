@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-
 import com.packt.todolistjavacollection.domain.Sort;
 import com.packt.todolistjavacollection.domain.SpecificationImp;
 import com.packt.todolistjavacollection.domain.ToDo;
@@ -23,10 +21,9 @@ public class ToDoRepositoryTest {
     @Autowired
     private ToDoRepositoryImp repository;
 
-    LocalDateTime date = LocalDateTime.now();
-    LocalDateTime date2 = date.plusHours(1L);
-    LocalDateTime date1 = date.plusMinutes(23);
-    LocalDateTime date3 = date.plusDays(1L);
+    String date1 = "27/03/2023";
+    String date2 = "28/03/2023";
+    String date3 = "29/03/2023";
 
     String high = "high";
     String medium = "medium";
@@ -78,10 +75,10 @@ public class ToDoRepositoryTest {
         String asc = "ASC";
         String desc = "DESC";
 
-        ToDo td_high = repository.save(new ToDo("hola", high, date3));
-        ToDo td_low1 = repository.save(new ToDo("hola 2 low", low, date2));
-        ToDo td_med = repository.save(new ToDo("hola", medium, date1));
-        ToDo td_low = repository.save(new ToDo("hola", low, date1));
+        repository.save(new ToDo("hola", high, date3));
+        repository.save(new ToDo("hola 2 low", low, date2));
+        repository.save(new ToDo("hola", medium, date1));
+        repository.save(new ToDo("hola", low, date1));
 
         Sort sort = new Sort("", "", "", "");
         ArrayList<ToDo> sorted_elements = repository.findAll(sort);
@@ -157,7 +154,7 @@ public class ToDoRepositoryTest {
     }
 
     @Test
-    public void testFindAllSpec(){
+    public void testFilterBy(){
         repository.deleteAll();
 
         repository.save(new ToDo("hola", high, date3));
@@ -168,13 +165,13 @@ public class ToDoRepositoryTest {
         td_low.setDone(true);
         repository.save(td_low);
 
-        ArrayList<ToDo> filter_elements = (ArrayList<ToDo>) repository.filterBy(new SpecificationImp("2 l", "", ""));
+        ArrayList<ToDo> filter_elements = (ArrayList<ToDo>) repository.filterBy(new SpecificationImp("2 l", "all", "all"));
         assertThat(filter_elements.get(0).getText()).as("Filter by text").isEqualTo("hola 2 low");
 
-        filter_elements = (ArrayList<ToDo>) repository.filterBy(new SpecificationImp("", high, ""));
+        filter_elements = (ArrayList<ToDo>) repository.filterBy(new SpecificationImp("all", high, "all"));
         assertThat(filter_elements.get(0).getPriority()).as("Filter by priority").isEqualTo(high);
 
-        filter_elements = (ArrayList<ToDo>) repository.filterBy(new SpecificationImp("", "", "true"));
+        filter_elements = (ArrayList<ToDo>) repository.filterBy(new SpecificationImp("all", "all", "true"));
         assertThat(filter_elements.size()).as("Filter by done").isEqualTo(1);
         assertThat(filter_elements.get(0).getPriority()).isEqualTo(low);
         assertThat(filter_elements.get(0).getText()).isEqualTo("hola");

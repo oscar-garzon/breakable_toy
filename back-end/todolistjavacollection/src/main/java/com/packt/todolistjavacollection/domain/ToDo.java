@@ -1,6 +1,8 @@
 package com.packt.todolistjavacollection.domain;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.Comparator;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,13 +18,14 @@ public class ToDo{
     
     // @DateTimeFormat(pattern="MM/dd/yyyy")
     // @FutureOrPresent
-    private LocalDateTime creation_date, done_date, due_date;
+    private LocalDateTime creation_date, done_date;
+    private LocalDate due_date;
     private boolean done;
 
-    public ToDo(String text, String priority, LocalDateTime due_date) {
+    public ToDo(String text, String priority, String due_date) {
         this.text = text;
         this.id = null;
-        this.due_date = due_date;
+        this.due_date = parse_date(due_date);
         this.done_date = null;
         this.creation_date = LocalDateTime.now();
         this.priority = priority;
@@ -32,7 +35,7 @@ public class ToDo{
     public ToDo(ToDo entity){
         this.text = entity.getText();
         this.id = entity.getId();
-        this.due_date = entity.getDue_date();
+        this.due_date = parse_date(entity.getDue_date());
         this.done_date = entity.getDone_date();
         this.creation_date = entity.getCreation_date();
         this.priority =entity.getPriority();
@@ -51,11 +54,13 @@ public class ToDo{
     public void setText(String text) {
         this.text = text;
     }
-    public LocalDateTime getDue_date() {
-        return due_date;
+    public String getDue_date() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return due_date.format(formatter);
     }
-    public void setDue_date(LocalDateTime due_date) {
-        this.due_date = due_date;
+    public void setDue_date(String due_date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.due_date = LocalDate.parse(due_date, formatter);
     }
     public LocalDateTime getDone_date() {
         return done_date;
@@ -96,8 +101,13 @@ public class ToDo{
     public void update(ToDo todo){
         this.text = todo.getText();
         this.priority = todo.getPriority();
-        this.due_date = todo.getDue_date();
+        this.due_date = parse_date(todo.getDue_date());
         return;
+    }
+
+    public LocalDate parse_date(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(date, formatter);
     }
 
     // Comparator to sort todos by priority

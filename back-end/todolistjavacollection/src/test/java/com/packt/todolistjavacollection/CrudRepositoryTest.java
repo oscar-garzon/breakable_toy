@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-
 import com.packt.todolistjavacollection.domain.ToDo;
 import com.packt.todolistjavacollection.repository.CrudRepositoryImp;
 
@@ -15,9 +13,9 @@ public class CrudRepositoryTest {
     @Autowired
     private CrudRepositoryImp repository;
 
-    LocalDateTime date1 = LocalDateTime.of(2023, 03, 24, 18, 23);
-	LocalDateTime date2 = LocalDateTime.of(2023, 03, 25, 10, 23);
-	LocalDateTime date3 = LocalDateTime.of(2023, 03, 24, 19, 23);
+    String date1 = "27/03/2023";
+    String date2 = "28/03/2023";
+    String date3 = "29/03/2023";
    
     @Test
     void testExistsById(){

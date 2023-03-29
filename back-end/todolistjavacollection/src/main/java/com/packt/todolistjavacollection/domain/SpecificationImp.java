@@ -5,13 +5,13 @@ package com.packt.todolistjavacollection.domain;
 // verify that spec. 
 public class SpecificationImp implements Specification<ToDo> {
 
-    // if filterText equals "" it means all texts
+    
     private String filterText;
 
-    // filterPriority only have four possible values: "", high, medium, low
+    // filterPriority only have four possible values: all, high, medium, low
     private String filterPriority;
     
-    // filterDone only have three possible values: "", true, false
+    // filterDone only have three possible values: all, true, false
     private String filterDone;
 
     
@@ -22,9 +22,16 @@ public class SpecificationImp implements Specification<ToDo> {
     }
     
     public boolean toPredicate(ToDo todo){
-        return todo.getText().contains(filterText) &&
-               (todo.getPriority().equals(filterPriority) || filterPriority.equals("")) &&
-               (filterDone.equals("") || (Boolean.parseBoolean(filterDone) == todo.isDone()));
+        return (todo.getText().toLowerCase().contains(filterText) || filterText.toLowerCase().equals("all"))&&
+               (todo.getPriority().equals(filterPriority) || filterPriority.equals("all")) &&
+               (filterDone.equals("all") || (Boolean.parseBoolean(filterDone) == todo.isDone()));
+    }
+
+    // Returns true if there are none filters. False in other case.
+    public boolean isEmpty(){
+        return filterText.equals("") && 
+                filterPriority.equals("") &&
+                filterDone.equals("");
     }
 
 }

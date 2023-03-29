@@ -17,12 +17,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.packt.todolistjavacollection.domain.ToDo;
 import com.packt.todolistjavacollection.domain.Sort;
 import com.packt.todolistjavacollection.exceptions.ToDoNotFoundException;
 import com.packt.todolistjavacollection.domain.ToDoRepositoryImp;
+import com.packt.todolistjavacollection.domain.SpecificationImp;
 
 @CrossOrigin()  
 @RestController
@@ -47,12 +49,23 @@ public class ToDoController {
                                                    @RequestParam(defaultValue = "" ) String filterByPriority,
                                                    @RequestParam(defaultValue = "" ) String filterByDone){
 
-        Sort sort = new Sort(principalSortBy, principalSortOrder, secondarySortBy, secondarySortOrder);                                                    
+        Sort sort = new Sort(principalSortBy, principalSortOrder, secondarySortBy, secondarySortOrder); 
+        SpecificationImp spec = new SpecificationImp(filterByText, filterByPriority, filterByDone); 
+        
+        ArrayList<ToDo> elements;
+
+        if(!spec.isEmpty()){
+            elements = repository.filterBy(spec);
+        }
+        else{
+            elements = repository.findAll(sort);
+        }
+
             
-        List<EntityModel<ToDo>> todos = repository.findAll(sort)
+        List<EntityModel<ToDo>> todos = elements
             .stream()
             .map(assembler::toModel)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());  
         return CollectionModel.of(todos, linkTo(methodOn(ToDoController.class).all(principalSortBy,
                                                                                               principalSortOrder,
                                                                                               secondarySortBy,

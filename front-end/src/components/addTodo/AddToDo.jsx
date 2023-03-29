@@ -37,7 +37,14 @@ function AddToDo({addTodo, setOpen}) {
                                 value={todo.text} onChange={handleChange} /><br/>
                             <input placeholder='Priority' name='priority'
                                 value={todo.priority} onChange={handleChange} /><br/>
-                            <input placeholder='Due date' name='due_date'
+                            {/* <select  name="priority" onChange={handleChange}>
+                                <option value="">Priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="">All</option>
+                            </select> <br /> */}
+                            <input placeholder='Due date dd/mm/aa' name='due_date'
                                 value={todo.due_date} onChange={handleChange} /><br/>
                         </div>
                         <div className="modalActions">

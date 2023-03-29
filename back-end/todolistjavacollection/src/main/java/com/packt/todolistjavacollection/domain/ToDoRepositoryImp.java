@@ -7,7 +7,6 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-//import com.packt.todolistjavacollection.exceptions.SortByNotFoundException;
 import com.packt.todolistjavacollection.repository.CrudRepositoryImp;
 
 @Component("todoRepositoryImp")
@@ -20,7 +19,7 @@ public class ToDoRepositoryImp extends CrudRepositoryImp implements ToDoReposito
         super();
     }
     
-    public Iterable<ToDo> filterBy(Specification<ToDo> spec){
+    public ArrayList<ToDo> filterBy(Specification<ToDo> spec){
         ArrayList<ToDo> elements = (ArrayList<ToDo>)findAll();
         ArrayList<ToDo> filtered_elements = new ArrayList<>();
         for(ToDo todo : elements){
@@ -29,10 +28,6 @@ public class ToDoRepositoryImp extends CrudRepositoryImp implements ToDoReposito
             }
         }
         return filtered_elements;
-    }
-
-    public Iterable<ToDo> sortBy(Specification spec){
-        return null;
     }
 
     public HashMap<String, String> getMetrics()
@@ -71,6 +66,15 @@ public class ToDoRepositoryImp extends CrudRepositoryImp implements ToDoReposito
             }
         }
         return elements;
+    }
+
+    @Override
+    public String toString(){
+        String todos = "";
+        for (ToDo todo : findAll()){
+            todos = todos + todo.toString() + ", %n";
+        }
+        return todos;
     }
 
     private void sortByPriority(ArrayList<ToDo> elements, String prioritySortOrder){

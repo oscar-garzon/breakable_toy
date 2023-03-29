@@ -1,7 +1,8 @@
 table {
     border: 2px solid black;
-    width: 100% ;
+    width: 95% ;
     height: 200px;
+    margin: 1% 2%;
   }
     
   th {
@@ -11,3 +12,8 @@ table {
   td {
     text-align: center;
   }
+
+  left {
+    display: flex;
+    align-self: flex-start;
+}

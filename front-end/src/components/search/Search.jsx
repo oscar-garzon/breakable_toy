@@ -1,63 +1,57 @@
-import React from 'react';
+import React, { useState } from "react";
+import './Search.css'
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+function Search({onSearch}){
+    const [text, setText] = useState('all');
+    const [priority, setPriority] = useState('all');
+    const [done, setDone] = useState('all');
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
-function Search(){
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-
-    return(
-        <div>
-            <div>
-                {/* <Grid>
-                <TextField fullWidth id="outlined-basic" label="text" variant="outlined" />
-                </Grid>
-                <Grid container rowSpacing={1}>
-
-                </Grid> */}
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>            
-                    <Grid item xs={12}>
-                        <TextField fullWidth id="outlined-basic" label="text" variant="outlined" />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={age}
-                            label="Age"
-                            onChange={handleChange}
-                            >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={age}
-                                label="Age"
-                                onChange={handleChange}
-                                >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                    </Grid>
-                </Grid>
+    const handleSearch = () => {
+        onSearch(`?filterByText=${text}&filterByPriority=${priority}&filterByDone=${done}`);
+    }
+    
+    const handleText = (event) => {
+        setText(event.target.value);
+        console.log(text);
+    }
+    const handlePriority = (event) => {
+        setPriority(event.target.value);
+    }
+    const handleDone = (event) => {
+        setDone(event.target.value);
+    }
+ return(
+    <>
+            <div className="search-container">
+                <div className="item-1">
+                    <label for="text">Name: </label>
+                    <input type="text"  
+                        name="text" id="text" 
+                        onChange={handleText} required/>
+                </div>
+                <div className="item-2">
+                    <label for="priority">Priority</label>
+                    <select onChange={handlePriority} name="priority" id="priority">
+                        <option value="all">All</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div className="item-3">
+                    <label for="done">State</label>
+                    <select onChange={handleDone} name="done" id="done">
+                        <option value="all">All</option>
+                        <option value="true">Done</option>
+                        <option value="false">Undone</option>
+                    </select>
+                </div>
+            <div className="item-4">
+                <button onClick={handleSearch}>Search</button>
             </div>
-        </div>);
+            </div>
+    </>
+ );
 }
+
 export default Search;

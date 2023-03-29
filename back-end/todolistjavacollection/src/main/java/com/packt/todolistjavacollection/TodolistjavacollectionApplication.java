@@ -1,7 +1,5 @@
 package com.packt.todolistjavacollection;
 
-import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -31,9 +29,10 @@ public class TodolistjavacollectionApplication implements CommandLineRunner {
 		String high = "high";
 		String medium = "medium";
 		String low = "low";
-		LocalDateTime date1 = LocalDateTime.of(2023, 03, 24, 18, 23);
-		LocalDateTime date2 = LocalDateTime.of(2023, 03, 25, 10, 23);
-		LocalDateTime date3 = LocalDateTime.of(2023, 03, 24, 19, 23);
+
+		String date1 = "27/03/2023";
+		String date2 = "28/03/2023";
+		String date3 = "29/03/2023";
 
 
 		repository.save(new ToDo("Implementa componente 1",high, date1));	
