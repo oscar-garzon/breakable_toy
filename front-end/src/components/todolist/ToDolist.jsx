@@ -85,63 +85,6 @@ function ToDolist() {
             .catch(err => console.error(err))
     }
 
-    // Calls the API to mark a task as done/undone
-    // const done_undone_Todo = (link) => {
-    //     fetch(link,
-    //         {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' }
-    //         })
-    //         .then(response => {
-    //             if(response.ok){
-    //                 fetchToDos();
-    //             }
-    //             else {
-    //                 alert('Something went wrong!');
-    //             }
-    //         })
-    //         .catch(err => console.error(err))
-    // }
-
-    // Calls the API to mark a task as done/undone
-    const handleDone = (link) => {
-        setDone(!done);
-        console.log("entre a handleDone y done es " + done );
-        if(done){
-            fetch(link + '/done',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => {
-                if(response.ok){
-                    fetchToDos();
-                }
-                else {
-                    alert('Something went wrong!');
-                }
-            })
-            .catch(err => console.error(err))
-        }
-        else {
-            fetch(link + '/undone',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => {
-                if(response.ok){
-                    fetchToDos();
-                }
-                else {
-                    alert('Something went wrong!');
-                }
-            })
-            .catch(err => console.error(err))
-        }
-        
-    }
-    
     const doneTodo = (link) => {
         fetch(link + '/done',
             {
@@ -176,8 +119,9 @@ function ToDolist() {
             .catch(err => console.error(err))
     }
 
-    const handleUPArrowPriority = () => {
-        setOrderByPriorityASC(!orderByPriorityASC);
+    const sortTodos = (sortBy, sortOrder) => {
+        console.log(sortBy + ' ' + sortOrder);
+        //setOrderByPriorityASC(!orderByPriorityASC);
         // if(orderByPriorityASC){
         //     fetch(SERVER_URL + 'todos?')
         // }
@@ -201,7 +145,7 @@ function ToDolist() {
                     <tr>
                         <th>    </th>
                         <th>Task</th>
-                        <th>Priority <button onClick={handleUPArrowPriority}>&uarr;</button>
+                        <th>Priority <button onClick={() => sortTodos('Priority', 'ASC')}>&uarr;</button>
                         </th>
                         <th>Due Date</th>
                         <th>Edit</th>
